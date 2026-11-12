@@ -371,6 +371,7 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
 
  <form class="add" id="rf" autocomplete="off" hidden>
   <h3>Оставить отзыв</h3>
+  <input class="f" id="rn" placeholder="Ваше имя (например, Давид)" maxlength="30" required>
   <select class="f" id="rs" aria-label="Оценка"><option value="5">★★★★★ — отлично</option><option value="4">★★★★ — хорошо</option><option value="3">★★★ — нормально</option><option value="2">★★ — плохо</option><option value="1">★ — ужасно</option></select>
   <textarea class="f" id="rt" placeholder="Ваш отзыв" required minlength="10" maxlength="400"></textarea>
   <input class="hp" id="rh" tabindex="-1" aria-hidden="true" placeholder="Не заполнять">
@@ -536,11 +537,11 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
   var last = +localStorage.getItem(LS+'_t') || 0;
   if(Date.now()-last < 30000){ say(msg, 'Подождите полминуты.','err'); return; }
   
-  var userName = prompt("Как вас зовут? (Имя для отзыва)", currentUser.email.split('@')[0]);
-  if (!userName || userName.trim().length < 2) { alert("Введите имя (минимум 2 символа)"); return; }
+  var inputName = document.getElementById('rn').value.trim();
+  if (!inputName || inputName.length < 2) { alert("Введите имя (минимум 2 символа)"); return; }
 
   var x = {
-    name: userName.trim().slice(0, 30),
+    name: inputName.slice(0, 30),
     text: document.getElementById('rt').value.trim().slice(0,400),
     rating: +document.getElementById('rs').value,
     user_id: currentUser.id
