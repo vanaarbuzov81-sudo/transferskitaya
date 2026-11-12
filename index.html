@@ -463,7 +463,24 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
        currentUser = user;
        authBox.hidden = true;
        userBar.hidden = false;
-       form.hidden = false;
+       
+       // Проверяем, есть ли уже отзыв от этого юзера
+       fetch(SB_URL + '/rest/v1/reviews?user_id=eq.' + user.id, {
+         headers: { apikey: SB_KEY, Authorization: 'Bearer ' + token }
+       })
+       .then(res => res.json())
+       .then(data => {
+         if (data && data.length > 0) {
+           // Если отзыв уже есть, прячем форму и пишем спасибо
+           say(msg, 'Вы уже оставили отзыв. Спасибо!', 'ok');
+           msg.style.display = 'block';
+           form.querySelector('button[type="submit"]').disabled = true;
+         } else {
+           form.hidden = false;
+         }
+       })
+       .catch(() => { form.hidden = false; });
+
        document.getElementById('un').textContent = user.email.split('@')[0];
        document.getElementById('ue').textContent = user.email;
        document.getElementById('uav').textContent = user.email.slice(0,2).toUpperCase();
@@ -547,6 +564,7 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
     form.reset(); say(msg, 'Спасибо! Отзыв добавлен.','ok');
     setTimeout(()=>{msg.style.display='none'}, 6000);
     box.innerHTML = ''; loadReviews();
+    form.hidden = true; // Прячем форму после отправки
   })
   .catch(function(){
     say(msg, 'Ошибка отправки. Попробуйте войти заново.','err');
