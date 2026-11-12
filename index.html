@@ -349,7 +349,6 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
   <article class="r"><div class="stars">★★★★★</div><q>Беру у них товары для магазина уже второй год. Курс прозрачный, всё считают понятно.</q><div class="who"><i>ИП</i><div><b>Игорь П.</b>Брест</div></div></article>
  </div>
 
- <!-- Вход / регистрация (видно, пока пользователь не вошел) -->
  <div class="add" id="authbox">
   <h3>Чтобы оставить отзыв, войдите или зарегистрируйтесь</h3>
   <div class="seg" role="tablist" aria-label="Вход или регистрация">
@@ -365,13 +364,11 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
   </form>
  </div>
 
- <!-- Панель пользователя (видно после входа) -->
  <div class="add ubar" id="userbar" hidden>
   <div class="ua"><i id="uav">?</i><div><b id="un"></b><small id="ue"></small></div></div>
   <button class="btn ghost" id="lo" type="button">Выйти</button>
  </div>
 
- <!-- Форма отзыва (видна только вошедшим) -->
  <form class="add" id="rf" autocomplete="off" hidden>
   <h3>Оставить отзыв</h3>
   <select class="f" id="rs" aria-label="Оценка"><option value="5">★★★★★ — отлично</option><option value="4">★★★★ — хорошо</option><option value="3">★★★ — нормально</option><option value="2">★★ — плохо</option><option value="1">★ — ужасно</option></select>
@@ -381,7 +378,6 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
   <div class="msg" id="rm" role="status"></div>
  </form>
 </div></section>
-
 
 <section id="faq" style="padding-top:0"><div class="wrap">
  <h2>Частые вопросы</h2><p class="lead">Если не нашли ответ, спросите в Telegram.</p>
@@ -443,7 +439,6 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
  }
  loadReviews();
 
- // Auth logic
  var authBox=document.getElementById('authbox'),userBar=document.getElementById('userbar'),
      af=document.getElementById('af'),an=document.getElementById('an'),ae=document.getElementById('ae'),ap=document.getElementById('ap'),
      ab=document.getElementById('ab'),am=document.getElementById('am'),tabIn=document.getElementById('tabIn'),tabUp=document.getElementById('tabUp'),
@@ -502,7 +497,6 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
        alert('Успешно! Теперь вы можете оставить отзыв.');
        location.reload();
      } else {
-       // Если регистрация прошла, но нет токена (включено подтверждение)
        say(am, 'Регистрация успешна. Проверьте почту для входа.', 'ok');
        setMode('in');
      }
