@@ -9,6 +9,7 @@
 <style>
 :root{--bg:#070B14;--surf:#131C31;--ink:#F8FAFC;--mut:#94A3B8;--line:#22304D;--red:#FF334B;--jade:#10B981;--on-red:#fff;--d:'Unbounded',sans-serif;--b:'Manrope',sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 *,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 132px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--b);-webkit-font-smoothing:antialiased}
 a{color:inherit}
@@ -121,14 +122,26 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rg
 .r .who b{display:block;color:var(--ink)}
 .stars{color:#F5A524;letter-spacing:2px}
 .empty{color:var(--mut);grid-column:1/-1}
-form.add{margin-top:28px;background:rgba(19,28,49,.85);border:1px solid var(--line);border-radius:24px;padding:24px;display:grid;gap:12px}
-form.add h3{font-size:18px}
+.add{margin-top:28px;background:rgba(19,28,49,.85);border:1px solid var(--line);border-radius:24px;padding:24px;display:grid;gap:12px}
+.add h3{font-size:18px}
+.add p.sub{margin:0;color:var(--mut);font-size:15px}
 .f{width:100%;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:13px 15px;font:inherit;transition:border-color .25s}
 .f:focus{outline:none;border-color:var(--red)}
 textarea.f{min-height:96px;resize:vertical}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .msg{display:none;font-weight:700}
 .msg.ok{color:var(--jade)}.msg.err{color:var(--red)}
+
+/* Регистрация / вход */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
+.seg button{height:42px;border:0;border-radius:10px;background:transparent;color:var(--mut);font:700 15px var(--b);cursor:pointer;transition:.25s}
+.seg button[aria-selected="true"]{background:linear-gradient(135deg,var(--red),#FF6B35);color:#fff}
+.afields{display:grid;gap:12px}
+.ubar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.ubar .ua{display:flex;align-items:center;gap:12px}
+.ubar .ua i{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--red),#FF7A00);display:grid;place-items:center;font:700 14px var(--d);font-style:normal;color:#fff}
+.ubar small{display:block;color:var(--mut);font-size:13px;overflow-wrap:anywhere}
+.ubar .btn{height:42px;padding:0 18px;font-size:14px;border-radius:12px}
 
 .order{background:linear-gradient(135deg,var(--red),#FF6B35);border-radius:32px;padding:clamp(28px,6vw,60px);text-align:center;box-shadow:0 20px 50px rgba(255,51,75,.4)}
 .order h2{margin-bottom:14px;background:none;-webkit-text-fill-color:#fff}
@@ -199,7 +212,7 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
  <a class="l" href="#delivery">Доставка и оплата</a>
  <a class="l" href="#rate">Курс юаня <small>из банка</small></a>
  <a class="l" href="#trust">Гарантии</a>
- <a class="l" href="#reviews">Отзывы</a>
+ <a class="l" href="#reviews">Отзывы <small>вход / регистрация</small></a>
  <a class="l" href="#faq">Вопросы</a>
  <a class="btn" href="#order">Сделать заказ</a>
 </nav>
@@ -333,18 +346,39 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
 </div></section>
 
 <section id="reviews" style="padding-top:0"><div class="wrap">
- <h2>Отзывы клиентов</h2><p class="lead">Что говорят те, кто уже заказывал.</p>
+ <h2>Отзывы клиентов</h2><p class="lead">Что говорят те, кто уже заказывал. Оставить отзыв могут только зарегистрированные пользователи.</p>
  <div class="rev" id="rev">
   <article class="r"><div class="stars">★★★★★</div><q>Заказал кроссовки с Poizon. Пришли за две недели, всё как на фото. Цену назвали сразу и не поменяли.</q><div class="who"><i>АК</i><div><b>Андрей К.</b>Минск</div></div></article>
   <article class="r"><div class="stars">★★★★★</div><q>Давид помог найти нужный пуховик и выкупил по хорошей цене. Прислали фото на складе, это успокаивает.</q><div class="who"><i>МС</i><div><b>Марина С.</b>Гродно</div></div></article>
   <article class="r"><div class="stars">★★★★★</div><q>Беру у них товары для магазина уже второй год. Курс прозрачный, всё считают понятно.</q><div class="who"><i>ИП</i><div><b>Игорь П.</b>Брест</div></div></article>
  </div>
- <form class="add" id="rf" autocomplete="off">
-  <h3>Оставить отзыв</h3>
-  <div class="two">
-   <input class="f" id="rn" placeholder="Ваше имя" required maxlength="40">
-   <select class="f" id="rs" aria-label="Оценка"><option value="5">★★★★★ — отлично</option><option value="4">★★★★ — хорошо</option><option value="3">★★★ — нормально</option><option value="2">★★ — плохо</option><option value="1">★ — ужасно</option></select>
+
+ <!-- Вход / регистрация (видно, пока пользователь не вошёл) -->
+ <div class="add" id="authbox">
+  <h3>Чтобы оставить отзыв, войдите или зарегистрируйтесь</h3>
+  <div class="seg" role="tablist" aria-label="Вход или регистрация">
+   <button type="button" role="tab" id="tabIn" aria-selected="true">Вход</button>
+   <button type="button" role="tab" id="tabUp" aria-selected="false">Регистрация</button>
   </div>
+  <form id="af" class="afields" novalidate>
+   <input class="f" id="an" placeholder="Ваше имя" maxlength="40" autocomplete="name" hidden>
+   <input class="f" id="ae" type="email" placeholder="Электронная почта" maxlength="120" autocomplete="email" required>
+   <input class="f" id="ap" type="password" placeholder="Пароль (не короче 6 символов)" minlength="6" maxlength="72" autocomplete="current-password" required>
+   <div><button class="btn" id="ab" type="submit">Войти</button></div>
+   <div class="msg" id="am" role="status"></div>
+  </form>
+ </div>
+
+ <!-- Панель пользователя (видно после входа) -->
+ <div class="add ubar" id="userbar" hidden>
+  <div class="ua"><i id="uav">?</i><div><b id="un"></b><small id="ue"></small></div></div>
+  <button class="btn ghost" id="lo" type="button">Выйти</button>
+ </div>
+
+ <!-- Форма отзыва (видна только вошедшим) -->
+ <form class="add" id="rf" autocomplete="off" hidden>
+  <h3>Оставить отзыв</h3>
+  <select class="f" id="rs" aria-label="Оценка"><option value="5">★★★★★ — отлично</option><option value="4">★★★★ — хорошо</option><option value="3">★★★ — нормально</option><option value="2">★★ — плохо</option><option value="1">★ — ужасно</option></select>
   <textarea class="f" id="rt" placeholder="Ваш отзыв" required minlength="10" maxlength="400"></textarea>
   <input class="hp" id="rh" tabindex="-1" aria-hidden="true" placeholder="Не заполнять">
   <div><button class="btn" id="rb" type="submit">Отправить отзыв</button></div>
@@ -361,6 +395,7 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
  <details class="q"><summary>Что, если товар окажется не тем?</summary><div>Вы увидите фото на нашем складе до отправки. Если есть расхождения, мы связываемся с продавцом и помогаем решить вопрос. Условия возврата зависят от площадки и продавца, поэтому обсуждаем их до заказа.</div></details>
  <details class="q"><summary>Как оплатить заказ?</summary><div>Переводом на карту в белорусских рублях. Реквизиты присылаем в личном сообщении после согласования цены.</div></details>
  <details class="q"><summary>Какие товары нельзя заказать?</summary><div>На ввоз и пересылку некоторых товаров есть ограничения. Если сомневаетесь, напишите нам до заказа, и мы скажем, возможно ли это.</div></details>
+ <details class="q"><summary>Нужно ли регистрироваться, чтобы сделать заказ?</summary><div>Нет, заказ делается через Telegram. Регистрация на сайте нужна только для того, чтобы оставить отзыв.</div></details>
  <div class="cta-row"><a class="btn tg" href="https://t.me/senqwz" data-msg="Здравствуйте! У меня вопрос." target="_blank" rel="noopener">Задать свой вопрос</a></div>
 </div></section>
 
@@ -385,11 +420,11 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
 <div class="fab"><button class="up-btn" id="up" type="button" aria-label="Наверх">↑</button><a class="btn tg" href="https://t.me/senqwz" data-msg="Здравствуйте! Хочу сделать заказ." target="_blank" rel="noopener">✈ Написать нам</a></div>
 <script>
 (function(){
- /* ── Хранилище отзывов. Заполните два значения (см. инструкцию Supabase) — тогда отзывы общие для всех.
-       Пока пусто: отзывы сохраняются только в браузере самого посетителя. ── */
- var SB_URL="";   // например https://abcdxyz.supabase.co
- var SB_KEY="";   // публичный anon key (не service_role!)
- var LS="yuan_reviews_v1", shared=!!(SB_URL&&SB_KEY);
+ /* ── Supabase: и отзывы, и регистрация (Supabase Auth). Нужны оба значения.
+       Без них регистрация недоступна, отзывы нельзя оставить. ── */
+ var SB_URL="https://lgqtlgwezvdwtyjot.supabase.co";
+ var SB_KEY="sb_publishable_oTLc8m688jr3AazMZQBNmA_Fcuy7hyJ";   // публичный ключ (не service_role!)
+ var LS_SESS="yuan_session_v1", shared=!!(SB_URL&&SB_KEY);
 
  var b=document.getElementById('bb'),m=document.getElementById('menu'),v=document.getElementById('veil');
  function set(o){m.classList.toggle('on',o);v.classList.toggle('on',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Закрыть меню':'Открыть меню');document.body.style.overflow=o?'hidden':''}
@@ -402,8 +437,9 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
  function calc(){var s=(parseFloat(y.value)||0)*(parseFloat(r.value)||0)*(1+(parseFloat(f.value)||0)/100);o.textContent=s.toFixed(2).replace('.',',')+' BYN'}
  [y,r,f].forEach(function(e){e.oninput=calc});calc();
 
+ /* ── Отзывы ── */
  var box=document.getElementById('rev'),form=document.getElementById('rf'),msg=document.getElementById('rm'),btn=document.getElementById('rb');
- function say(t,c){msg.textContent=t;msg.className='msg '+c;msg.style.display='block'}
+ function say(el,t,c){el.textContent=t;el.className='msg '+c;el.style.display='block'}
  function card(x){
   var a=document.createElement('article');a.className='r';
   var s=document.createElement('div');s.className='stars';var n=Math.min(5,Math.max(1,parseInt(x.rating)||5));s.textContent='★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);
@@ -414,34 +450,132 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
   w.appendChild(i);w.appendChild(d);a.appendChild(s);a.appendChild(q);a.appendChild(w);return a;
  }
  function show(list){list.slice().reverse().forEach(function(x){box.prepend(card(x))})}
- function lsGet(){try{return JSON.parse(localStorage.getItem(LS)||'[]')}catch(e){return[]}}
- function lsPut(x){try{var l=lsGet();l.push(x);localStorage.setItem(LS,JSON.stringify(l.slice(-50)))}catch(e){}}
- function hdr(extra){var h={apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'};for(var k in extra)h[k]=extra[k];return h}
+ function hdr(extra,token){var h={apikey:SB_KEY,Authorization:'Bearer '+(token||SB_KEY),'Content-Type':'application/json'};for(var k in extra)h[k]=extra[k];return h}
 
  function load(){
-  if(!shared){show(lsGet().reverse());return}
+  if(!shared)return;
   fetch(SB_URL+'/rest/v1/reviews?select=name,text,rating&approved=eq.true&order=created_at.desc&limit=60',{headers:hdr()})
    .then(function(res){if(!res.ok)throw 0;return res.json()}).then(show).catch(function(){});
  }
  load();
 
+ /* ── Регистрация и вход (Supabase Auth) ── */
+ var authBox=document.getElementById('authbox'),userBar=document.getElementById('userbar'),
+     af=document.getElementById('af'),an=document.getElementById('an'),ae=document.getElementById('ae'),ap=document.getElementById('ap'),
+     ab=document.getElementById('ab'),am=document.getElementById('am'),tabIn=document.getElementById('tabIn'),tabUp=document.getElementById('tabUp'),
+     mode='in', sess=null;
+
+ function saveSess(s){sess=s;try{if(s)localStorage.setItem(LS_SESS,JSON.stringify(s));else localStorage.removeItem(LS_SESS)}catch(e){}}
+ function loadSess(){try{return JSON.parse(localStorage.getItem(LS_SESS)||'null')}catch(e){return null}}
+ function normSess(d){
+  if(!d||!d.access_token||!d.user)return null;
+  return {access_token:d.access_token,refresh_token:d.refresh_token,
+          expires_at:d.expires_at||(Math.floor(Date.now()/1000)+(d.expires_in||3600)),
+          user:{id:d.user.id,email:d.user.email,name:(d.user.user_metadata&&d.user.user_metadata.name)||''}};
+ }
+ function errText(d,fallback){
+  var t=(d&&(d.msg||d.error_description||d.message||d.error))||'';
+  t=String(t).toLowerCase();
+  if(t.indexOf('invalid login')>-1)return 'Неверная почта или пароль.';
+  if(t.indexOf('already')>-1&&t.indexOf('regist')>-1)return 'Эта почта уже зарегистрирована. Войдите.';
+  if(t.indexOf('password')>-1&&(t.indexOf('least')>-1||t.indexOf('short')>-1||t.indexOf('weak')>-1))return 'Пароль слишком простой или короткий (минимум 6 символов).';
+  if(t.indexOf('email')>-1&&t.indexOf('confirm')>-1)return 'Подтвердите почту: мы отправили вам письмо со ссылкой.';
+  if(t.indexOf('rate')>-1||t.indexOf('too many')>-1)return 'Слишком много попыток. Подождите немного.';
+  if(t.indexOf('valid')>-1&&t.indexOf('email')>-1)return 'Введите корректную почту.';
+  return fallback;
+ }
+ function render(){
+  var on=!!sess;
+  authBox.hidden=on;userBar.hidden=!on;form.hidden=!on;
+  if(on){
+   var nm=sess.user.name||sess.user.email.split('@')[0];
+   document.getElementById('un').textContent=nm;
+   document.getElementById('ue').textContent=sess.user.email;
+   document.getElementById('uav').textContent=nm.slice(0,2).toUpperCase();
+  }
+ }
+ function setMode(mm){
+  mode=mm;var up=mm==='up';
+  tabIn.setAttribute('aria-selected',!up);tabUp.setAttribute('aria-selected',up);
+  an.hidden=!up;an.required=up;
+  ap.autocomplete=up?'new-password':'current-password';
+  ab.textContent=up?'Зарегистрироваться':'Войти';
+  am.style.display='none';
+ }
+ tabIn.onclick=function(){setMode('in')};
+ tabUp.onclick=function(){setMode('up')};
+
+ function refreshIfNeeded(){
+  if(!sess)return Promise.resolve();
+  if(sess.expires_at-Math.floor(Date.now()/1000)>60)return Promise.resolve();
+  return fetch(SB_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:hdr(),body:JSON.stringify({refresh_token:sess.refresh_token})})
+   .then(function(res){return res.json().then(function(d){if(!res.ok)throw 0;return d})})
+   .then(function(d){var s=normSess(d);if(!s)throw 0;saveSess(s)})
+   .catch(function(){saveSess(null);render()});
+ }
+
+ af.onsubmit=function(e){
+  e.preventDefault();
+  if(!shared){say(am,'Регистрация временно недоступна.','err');return}
+  var email=ae.value.trim(),pass=ap.value,name=an.value.trim().slice(0,40);
+  if(mode==='up'&&name.length<2){say(am,'Укажите имя (минимум 2 символа).','err');return}
+  if(!/^\S+@\S+\.\S+$/.test(email)){say(am,'Введите корректную почту.','err');return}
+  if(pass.length<6){say(am,'Пароль — минимум 6 символов.','err');return}
+  ab.disabled=true;
+  var req=mode==='up'
+   ? fetch(SB_URL+'/auth/v1/signup',{method:'POST',headers:hdr(),body:JSON.stringify({email:email,password:pass,data:{name:name}})})
+   : fetch(SB_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:hdr(),body:JSON.stringify({email:email,password:pass})});
+  req.then(function(res){return res.json().then(function(d){return{ok:res.ok,d:d}})})
+   .then(function(x){
+    if(!x.ok)throw x.d;
+    var s=normSess(x.d);
+    if(s){
+     if(mode==='up'&&!s.user.name)s.user.name=name;
+     saveSess(s);af.reset();am.style.display='none';render();
+     document.getElementById('rf').scrollIntoView({behavior:'smooth',block:'center'});
+    }else{
+     // регистрация прошла, но проект требует подтверждения почты
+     af.reset();setMode('in');
+     say(am,'Готово! Мы отправили письмо на почту. Подтвердите её и войдите.','ok');
+    }
+   })
+   .catch(function(d){say(am,errText(d,mode==='up'?'Не удалось зарегистрироваться. Попробуйте позже.':'Не удалось войти. Проверьте почту и пароль.'),'err')})
+   .then(function(){ab.disabled=false});
+ };
+
+ document.getElementById('lo').onclick=function(){
+  var tk=sess&&sess.access_token;
+  saveSess(null);render();setMode('in');
+  if(shared&&tk)fetch(SB_URL+'/auth/v1/logout',{method:'POST',headers:hdr({},tk)}).catch(function(){});
+ };
+
+ sess=loadSess();
+ if(sess&&!(sess.access_token&&sess.user&&sess.user.id))sess=null;
+ render();
+ if(sess)refreshIfNeeded().then(render);
+
+ /* ── Отправка отзыва: только для вошедших ── */
  form.onsubmit=function(e){
   e.preventDefault();
   if(document.getElementById('rh').value)return;                 // бот
-  var last=+localStorage.getItem(LS+'_t')||0;
-  if(Date.now()-last<30000){say('Подождите полминуты перед следующим отзывом.','err');return}
-  var x={name:document.getElementById('rn').value.trim().slice(0,40),text:document.getElementById('rt').value.trim().slice(0,400),rating:+document.getElementById('rs').value};
-  if(!x.name||x.text.length<10){say('Напишите имя и отзыв (минимум 10 символов).','err');return}
+  if(!sess){render();return}
+  var last=+localStorage.getItem('yuan_reviews_t')||0;
+  if(Date.now()-last<30000){say(msg,'Подождите полминуты перед следующим отзывом.','err');return}
+  var x={name:sess.user.name||sess.user.email.split('@')[0],text:document.getElementById('rt').value.trim().slice(0,400),rating:+document.getElementById('rs').value,user_id:sess.user.id};
+  if(x.text.length<10){say(msg,'Отзыв — минимум 10 символов.','err');return}
   btn.disabled=true;
-  function done(t){try{localStorage.setItem(LS+'_t',Date.now())}catch(e){}form.reset();say(t,'ok');btn.disabled=false;setTimeout(function(){msg.style.display='none'},6000)}
-  if(shared){
-   fetch(SB_URL+'/rest/v1/reviews',{method:'POST',headers:hdr({Prefer:'return=minimal'}),body:JSON.stringify(x)})
-    .then(function(res){if(!res.ok)throw 0;done('Спасибо! Отзыв появится на сайте после проверки.')})
-    .catch(function(){say('Не удалось отправить. Попробуйте позже или напишите нам в Telegram.','err');btn.disabled=false});
-  }else{
-   lsPut(x);box.prepend(card(x));done('Спасибо! Отзыв сохранён в вашем браузере.');
-  }
+  refreshIfNeeded().then(function(){
+   if(!sess){btn.disabled=false;say(am,'Сессия истекла. Войдите снова.','err');return}
+   return fetch(SB_URL+'/rest/v1/reviews',{method:'POST',headers:hdr({Prefer:'return=minimal'},sess.access_token),body:JSON.stringify(x)})
+    .then(function(res){if(!res.ok)throw 0;
+     try{localStorage.setItem('yuan_reviews_t',Date.now())}catch(e){}
+     form.reset();say(msg,'Спасибо! Отзыв появится на сайте после проверки.','ok');
+     setTimeout(function(){msg.style.display='none'},6000)})
+    .catch(function(){say(msg,'Не удалось отправить. Попробуйте позже или напишите нам в Telegram.','err')})
+    .then(function(){btn.disabled=false});
+  });
  };
+
  document.querySelectorAll('a.tg').forEach(function(a){a.href='https://t.me/senqwz?text='+encodeURIComponent(a.dataset.msg||'')});
  document.getElementById('qb').onclick=function(){
   var t=document.getElementById('ql').value.trim(),w=document.getElementById('qw').value;
