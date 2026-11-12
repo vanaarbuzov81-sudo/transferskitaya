@@ -464,14 +464,12 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
        authBox.hidden = true;
        userBar.hidden = false;
        
-       // Проверяем, есть ли уже отзыв от этого юзера
        fetch(SB_URL + '/rest/v1/reviews?user_id=eq.' + user.id, {
          headers: { apikey: SB_KEY, Authorization: 'Bearer ' + token }
        })
        .then(res => res.json())
        .then(data => {
          if (data && data.length > 0) {
-           // Если отзыв уже есть, прячем форму и пишем спасибо
            say(msg, 'Вы уже оставили отзыв. Спасибо!', 'ok');
            msg.style.display = 'block';
            form.querySelector('button[type="submit"]').disabled = true;
@@ -538,8 +536,11 @@ details.q div{padding:0 22px 20px;color:var(--mut)}
   var last = +localStorage.getItem(LS+'_t') || 0;
   if(Date.now()-last < 30000){ say(msg, 'Подождите полминуты.','err'); return; }
   
+  var userName = prompt("Как вас зовут? (Имя для отзыва)", currentUser.email.split('@')[0]);
+  if (!userName || userName.trim().length < 2) { alert("Введите имя (минимум 2 символа)"); return; }
+
   var x = {
-    name: currentUser.email.split('@')[0],
+    name: userName.trim().slice(0, 30),
     text: document.getElementById('rt').value.trim().slice(0,400),
     rating: +document.getElementById('rs').value,
     user_id: currentUser.id
