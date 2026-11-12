@@ -7,16 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#070B14;--surf:#131C31;--ink:#F8FAFC;--mut:#94A3B8;--line:#22304D;--red:#FF334B;--red2:#FF5C6C;--jade:#10B981;--on-red:#fff;
---d:'Unbounded',sans-serif;--b:'Manrope',sans-serif;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+:root{--bg:#070B14;--surf:#131C31;--ink:#F8FAFC;--mut:#94A3B8;--line:#22304D;--red:#FF334B;--jade:#10B981;--on-red:#fff;--d:'Unbounded',sans-serif;--b:'Manrope',sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 *,*::before,*::after{box-sizing:inherit}
-html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--b);-webkit-font-smoothing:antialiased;
-background-image: radial-gradient(circle at 10% 20%, rgba(255, 51, 75, 0.08) 0%, transparent 40%),
-                  radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
-                  radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 60%);
-background-attachment: fixed;}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 132px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--b);-webkit-font-smoothing:antialiased}
 a{color:inherit}
 h1,h2,h3{font-family:var(--d);line-height:1.15;margin:0;font-weight:700;letter-spacing:-.02em}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
@@ -25,139 +19,188 @@ h2{font-size:clamp(26px,5vw,42px);margin-bottom:18px;background:linear-gradient(
 .lead{color:var(--mut);max-width:62ch;margin:0 0 32px}
 :focus-visible{outline:3px solid var(--jade);outline-offset:3px;border-radius:8px}
 
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(7,11,20,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font:700 18px var(--d);text-decoration:none;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fff,#FF5C6C);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.logo i{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--red),#FF7A00);display:grid;place-items:center;color:var(--on-red);font:700 16px var(--d);font-style:normal;-webkit-text-fill-color:var(--on-red);box-shadow:0 8px 20px rgba(255,51,75,.4)}
+/* ФОН: дрейфующие «фонари», сетка и слово 元 */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(120% 80% at 50% -10%,#14203d 0%,var(--bg) 60%)}
+.bg i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
+.bg i:nth-child(1){width:46vmax;height:46vmax;left:-12vmax;top:-10vmax;background:#FF334B;opacity:.28;animation:a1 26s ease-in-out infinite alternate}
+.bg i:nth-child(2){width:38vmax;height:38vmax;right:-10vmax;top:20vh;background:#FF7A00;opacity:.18;animation:a2 32s ease-in-out infinite alternate}
+.bg i:nth-child(3){width:44vmax;height:44vmax;left:25vw;bottom:-22vmax;background:#10B981;opacity:.2;animation:a3 29s ease-in-out infinite alternate}
+.bg::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 30%,#000 20%,transparent 75%)}
+.bg::after{content:"元";position:absolute;right:4vw;bottom:-4vw;font:900 clamp(220px,38vw,560px)/1 var(--d);color:rgba(255,255,255,.025);pointer-events:none}
+@keyframes a1{to{transform:translate(18vmax,12vmax) scale(1.15)}}
+@keyframes a2{to{transform:translate(-14vmax,16vmax) scale(.9)}}
+@keyframes a3{to{transform:translate(-16vmax,-10vmax) scale(1.2)}}
+@media(prefers-reduced-motion:reduce){.bg i{animation:none}html{scroll-behavior:auto}}
 
-.burger{width:46px;height:46px;border:1px solid var(--line);background:var(--surf);border-radius:14px;cursor:pointer;display:grid;place-content:center;gap:5px;transition:all .3s cubic-bezier(.4,0,.2,1)}
-.burger:hover{border-color:var(--red);transform:scale(1.05);box-shadow:0 6px 20px rgba(255,51,75,.25)}
-.burger:active{transform:scale(0.95)}
-.burger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s cubic-bezier(.4,0,.2,1)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(7,11,20,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:700 18px var(--d);text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--red),#FF7A00);display:grid;place-items:center;font:700 16px var(--d);font-style:normal;box-shadow:0 8px 20px rgba(255,51,75,.4)}
+.burger{width:46px;height:46px;border:1px solid var(--line);background:var(--surf);border-radius:14px;cursor:pointer;display:grid;place-content:center;gap:5px;transition:.3s}
+.burger:hover{border-color:var(--red);box-shadow:0 6px 20px rgba(255,51,75,.25)}
+.burger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
 .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
 .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
 .veil{position:fixed;inset:0;background:rgba(8,14,34,.7);opacity:0;pointer-events:none;transition:.3s;z-index:70}
 .veil.on{opacity:1;pointer-events:auto}
 .menu{position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);background:var(--surf);z-index:80;transform:translateX(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);padding:calc(env(safe-area-inset-top,0px) + 22px) 24px calc(env(safe-area-inset-bottom,0px) + 24px);display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.4);visibility:hidden}
 .menu.on{transform:none;visibility:visible}
-.menu .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;font:500 14px var(--b);color:var(--mut)}
-.menu a.l{display:flex;align-items:center;justify-content:space-between;padding:17px 4px;border-bottom:1px solid var(--line);text-decoration:none;font:500 20px var(--d);transition:all .25s ease}
+.menu .top{margin-bottom:26px;font:500 14px var(--b);color:var(--mut)}
+.menu a.l{display:flex;align-items:center;justify-content:space-between;padding:17px 4px;border-bottom:1px solid var(--line);text-decoration:none;font:500 20px var(--d);transition:.25s}
 .menu a.l small{font:500 13px var(--b);color:var(--mut)}
 .menu a.l:hover{color:var(--red);padding-left:10px}
 .menu .btn{margin-top:auto}
 
-/* Плавные современные кнопки */
-.btn{--h:54px;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:var(--h);padding:0 30px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--red),#FF6B35);color:var(--on-red);font:700 16px var(--b);text-decoration:none;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 8px 24px -6px rgba(255,51,75,.4);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease,background .3s ease;-webkit-tap-highlight-color:transparent}
-.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-130%);transition:transform .7s ease}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 30px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--red),#FF6B35);color:var(--on-red);font:700 16px var(--b);text-decoration:none;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 8px 24px -6px rgba(255,51,75,.4);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-130%);transition:transform .7s}
 .btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 16px 36px -8px rgba(255,51,75,.65)}
 .btn:hover::after{transform:translateX(130%)}
-.btn:active{transform:translateY(1px) scale(0.97);box-shadow:0 4px 14px -4px rgba(255,51,75,.5);transition:transform .1s ease}
-
-.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
-.btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink);background:rgba(255,255,255,.05);transform:translateY(-3px) scale(1.02)}
-.btn.ghost:active{transform:translateY(1px) scale(0.97)}
+.btn:active{transform:translateY(1px) scale(.97)}
+.btn[disabled]{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink);background:rgba(255,255,255,.05)}
 .btn.ghost::after{display:none}
 
-.hero{padding:70px 0 56px;overflow:hidden}
+.hero{padding:70px 0 56px}
 .hero-g{display:grid;gap:44px;grid-template-columns:1.15fr .85fr;align-items:center}
 .hero h1{font-size:clamp(34px,7.2vw,68px);margin-bottom:22px;background:linear-gradient(135deg,#fff 40%,var(--mut));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{font-size:19px;color:var(--mut);max-width:48ch;margin:0 0 30px}
 .acts{display:flex;gap:12px;flex-wrap:wrap}
-.route{background:var(--surf);border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.route{background:rgba(19,28,49,.8);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:0 20px 40px rgba(0,0,0,.3)}
 .route svg{width:100%;height:auto;display:block}
 .route .cap{display:flex;justify-content:space-between;font-weight:700;margin-top:8px}
 .route .cap span:last-child{color:var(--jade)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
-.stats div{background:var(--surf);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.2);border-top:4px solid var(--red);color:var(--mut);font-size:14px;transition:transform .3s ease}
-.stats div:hover{transform:translateY(-4px)}
+.stats div{background:rgba(19,28,49,.8);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:20px;padding:20px;border-top:4px solid var(--red);color:var(--mut);font-size:14px}
 .stats div:nth-child(2){border-top-color:#FF7A00}
 .stats div:nth-child(3){border-top-color:var(--jade)}
 .stats b{display:block;font:700 clamp(22px,4vw,34px) var(--d);color:var(--ink);margin-top:4px}
 
 .about-g{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:start}
-.person{background:linear-gradient(135deg,#131C31,#070B14);color:var(--ink);border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,.4)}
-.person .av{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,var(--red),#FF7A00);display:grid;place-items:center;font:700 26px var(--d);color:var(--on-red);margin-bottom:18px;box-shadow:0 10px 20px rgba(255,51,75,.3)}
+.person{background:linear-gradient(135deg,#131C31,#0b1222);border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.av{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,var(--red),#FF7A00);display:grid;place-items:center;font:700 26px var(--d);margin-bottom:18px;box-shadow:0 10px 20px rgba(255,51,75,.3)}
 .person h3{font-size:22px;margin-bottom:6px}
-.person p{margin:0;opacity:.75;font-size:15px}
-.person a{text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.4);transition:all .2s ease}
+.person p{margin:0 0 12px;opacity:.75;font-size:15px}
+.person a{text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.4);transition:.2s}
 .person a:hover{color:var(--red);border-color:var(--red)}
 .about-g p{margin:0 0 16px;color:var(--mut)}
 .about-g p b{color:var(--ink)}
 .feats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
-.feats div{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:16px 18px;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:transform .3s ease}
-.feats div:hover{transform:translateY(-3px)}
+.feats div{background:rgba(19,28,49,.8);border:1px solid var(--line);border-radius:18px;padding:16px 18px;font-weight:700;font-size:15px}
 .feats small{display:block;font-weight:400;color:var(--mut);margin-top:3px}
 
-.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
 .steps li{display:grid;grid-template-columns:56px 1fr;gap:16px;padding:22px 0;border-top:1px solid var(--line);counter-increment:s}
-.steps li::before{content:counter(s);width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--red),#FF7A00);display:grid;place-items:center;font:700 16px var(--d);color:var(--on-red);box-shadow:0 8px 20px rgba(255,51,75,.3)}
+.steps li::before{content:counter(s);width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--red),#FF7A00);display:grid;place-items:center;font:700 16px var(--d);box-shadow:0 8px 20px rgba(255,51,75,.3)}
 .steps b{display:block;font-size:19px;margin-bottom:4px}
 .steps span{color:var(--mut)}
 
-.rate{background:linear-gradient(135deg,#131C31,#070B14);color:var(--ink);border:1px solid var(--line);border-radius:32px;padding:clamp(24px,5vw,52px);box-shadow:0 25px 50px rgba(0,0,0,.5)}
+.rate{background:linear-gradient(135deg,rgba(19,28,49,.92),rgba(7,11,20,.92));border:1px solid var(--line);border-radius:32px;padding:clamp(24px,5vw,52px);box-shadow:0 25px 50px rgba(0,0,0,.5)}
 .rate h2{color:#fff}
-.rate .lead{color:var(--mut)}
-.rg{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:24px}
-.card h3{font-size:16px;margin-bottom:14px;font-family:var(--b);color:#fff}
+.card h3{font-size:16px;margin-bottom:14px;font-family:var(--b)}
 .how{display:grid;gap:12px;margin:0;padding:0;list-style:none}
 .how li{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--mut)}
 .how i{flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-style:normal;font-weight:700;background:rgba(255,255,255,.08);color:#fff}
-.up{color:var(--jade)}.down{color:var(--red)}
+.up{color:var(--jade)!important}.down{color:var(--red)!important}
 .calc label{display:block;font-size:13px;opacity:.7;margin:12px 0 5px}
-.calc input{width:100%;height:48px;border-radius:13px;border:1.5px solid rgba(255,255,255,.15);background:rgba(0,0,0,.2);color:inherit;padding:0 14px;font:500 17px var(--b);transition:border-color .25s ease}
+.calc input{width:100%;height:48px;border-radius:13px;border:1.5px solid rgba(255,255,255,.15);background:rgba(0,0,0,.2);color:inherit;padding:0 14px;font:500 17px var(--b);transition:border-color .25s}
 .calc input:focus{outline:none;border-color:var(--red)}
-.calc .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.calc .res{margin-top:18px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.2);display:flex;justify-content:space-between;align-items:baseline}
-.calc .res b{font:700 28px var(--d);color:var(--jade)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.res{margin-top:18px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.2);display:flex;justify-content:space-between;align-items:baseline}
+.res b{font:700 28px var(--d);color:var(--jade)}
 .note{font-size:13px;opacity:.6;margin:12px 0 0}
 
 .rev{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.r{background:var(--surf);border:1px solid var(--line);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:14px;box-shadow:0 15px 30px rgba(0,0,0,.2);transition:transform .3s ease}
-.r:hover{transform:translateY(-4px)}
-.r q{quotes:none;font-size:16px;color:var(--mut)}
+.r{background:rgba(19,28,49,.85);border:1px solid var(--line);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:14px;box-shadow:0 15px 30px rgba(0,0,0,.2)}
+.r q{quotes:none;font-size:16px;color:var(--mut);overflow-wrap:anywhere}
 .r .who{margin-top:auto;display:flex;align-items:center;gap:12px;font-size:14px;color:var(--mut)}
-.r .who i{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--red),#FF7A00);color:var(--on-red);display:grid;place-items:center;font:700 14px var(--d);font-style:normal}
+.r .who i{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--red),#FF7A00);display:grid;place-items:center;font:700 14px var(--d);font-style:normal;color:#fff}
 .r .who b{display:block;color:var(--ink)}
 .stars{color:#F5A524;letter-spacing:2px}
-form.add{margin-top:28px;background:var(--surf);border:1px solid var(--line);border-radius:24px;padding:24px;display:grid;gap:12px;box-shadow:0 15px 30px rgba(0,0,0,.2)}
+.empty{color:var(--mut);grid-column:1/-1}
+form.add{margin-top:28px;background:rgba(19,28,49,.85);border:1px solid var(--line);border-radius:24px;padding:24px;display:grid;gap:12px}
 form.add h3{font-size:18px}
-.f{width:100%;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:13px 15px;font:inherit;transition:border-color .25s ease}
+.f{width:100%;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:13px 15px;font:inherit;transition:border-color .25s}
 .f:focus{outline:none;border-color:var(--red)}
 textarea.f{min-height:96px;resize:vertical}
-.ok{display:none;color:var(--jade);font-weight:700}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.msg{display:none;font-weight:700}
+.msg.ok{color:var(--jade)}.msg.err{color:var(--red)}
 
-.order{background:linear-gradient(135deg,var(--red),#FF6B35);color:var(--on-red);border-radius:32px;padding:clamp(28px,6vw,60px);text-align:center;box-shadow:0 20px 50px rgba(255,51,75,.4)}
-.order h2{margin-bottom:14px;background:none;-webkit-text-fill-color:var(--on-red)}.order p{margin:0 auto 26px;max-width:46ch;opacity:.9}
+.order{background:linear-gradient(135deg,var(--red),#FF6B35);border-radius:32px;padding:clamp(28px,6vw,60px);text-align:center;box-shadow:0 20px 50px rgba(255,51,75,.4)}
+.order h2{margin-bottom:14px;background:none;-webkit-text-fill-color:#fff}
+.order p{margin:0 auto 26px;max-width:46ch;opacity:.92}
 .order-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.order .btn{background:var(--on-red);color:var(--red);box-shadow:0 12px 30px rgba(0,0,0,.3)}
-.order .btn:hover{background:#fff;color:#D92B3E}
-
-footer{padding:36px 0 48px;border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+.order .btn{background:#fff;color:var(--red);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+.order .btn:hover{color:#D92B3E}
+footer{padding:36px 0 48px;border-top:1px solid var(--line);color:var(--mut);font-size:14px;background:rgba(7,11,20,.6)}
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-@media(max-width:820px){
- section{padding:60px 0}
- .hero-g,.about-g,.rg,.rev{grid-template-columns:1fr}
- .hero{padding-top:40px}
-}
+@media(max-width:820px){section{padding:60px 0}.hero-g,.about-g,.rg,.rev{grid-template-columns:1fr}.hero{padding-top:40px}}
 @media(max-width:480px){.stats{grid-template-columns:1fr;gap:12px}.feats{grid-template-columns:1fr}.btn{width:100%}.acts{width:100%}}
+
+.tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 65px);z-index:45;background:rgba(7,11,20,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+.tabs .wrap::-webkit-scrollbar{display:none}
+.tabs a{flex:none;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surf);text-decoration:none;font:700 14px var(--b);color:var(--mut);white-space:nowrap;transition:.25s}
+.tabs a:hover{color:var(--ink);border-color:var(--ink)}
+.tabs a[aria-current="true"]{background:linear-gradient(135deg,var(--red),#FF6B35);color:#fff;border-color:transparent;box-shadow:0 6px 18px -6px rgba(255,51,75,.6)}
+.g3,.g4{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.tile{background:rgba(19,28,49,.85);border:1px solid var(--line);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 15px 30px rgba(0,0,0,.2);transition:border-color .25s,transform .25s}
+.tile:hover{border-color:rgba(255,51,75,.55);transform:translateY(-3px)}
+.tile h3{font-size:17px}
+.tile p{margin:0;color:var(--mut);font-size:15px}
+.tile .btn{margin-top:auto;height:44px;font-size:14px;padding:0 18px;border-radius:12px}
+.ic{width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);display:grid;place-items:center;font-size:24px}
+.tag{align-self:flex-start;font:700 12px var(--b);padding:4px 10px;border-radius:999px;background:rgba(16,185,129,.14);color:var(--jade)}
+.tag.warn{background:rgba(245,165,36,.14);color:#F5A524}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+details.q{background:rgba(19,28,49,.85);border:1px solid var(--line);border-radius:18px;margin-bottom:10px;transition:border-color .25s}
+details.q[open]{border-color:rgba(255,51,75,.5)}
+details.q summary{cursor:pointer;list-style:none;padding:18px 22px;font:700 16px var(--b);display:flex;justify-content:space-between;gap:16px;align-items:center}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::after{content:"+";font:500 26px/1 var(--d);color:var(--red);transition:transform .25s}
+details.q[open] summary::after{transform:rotate(45deg)}
+details.q div{padding:0 22px 20px;color:var(--mut)}
+.quick{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;max-width:760px;margin:0 auto 22px}
+.quick .f{background:rgba(255,255,255,.95);color:#0b1222;border-color:transparent}
+.quick .btn{background:#0b1222;color:#fff;height:50px}
+.fab{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:60;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.fab .btn{width:auto;height:50px;border-radius:999px;box-shadow:0 12px 30px -6px rgba(255,51,75,.6)}
+.up-btn{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surf);color:var(--ink);font-size:20px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s}
+.up-btn.on{opacity:1;pointer-events:auto}
+.foot-btn{background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:8px 16px;font:700 14px var(--b);cursor:pointer}
+.foot-btn:hover{border-color:var(--ink)}
+@media(max-width:980px){.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){.g3{grid-template-columns:1fr}.quick{grid-template-columns:1fr}}
+@media(max-width:480px){.g4{grid-template-columns:1fr}.cta-row .btn{width:100%}}
 </style>
 </head>
 <body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
 <header><div class="wrap bar">
  <a class="logo" href="#home"><i>¥</i>Юань Экспресс</a>
  <button class="burger" id="bb" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
 </div></header>
+<nav class="tabs" id="tabs" aria-label="Разделы сайта"><div class="wrap">
+ <a href="#how">Как это работает</a><a href="#where">Где закупаем</a><a href="#goods">Что возим</a><a href="#delivery">Доставка и оплата</a><a href="#rate">Курс</a><a href="#trust">Гарантии</a><a href="#reviews">Отзывы</a><a href="#faq">Вопросы</a><a href="#order">Заказать</a>
+</div></nav>
 <div class="veil" id="veil"></div>
 <nav class="menu" id="menu" aria-label="Главное меню">
  <div class="top"><span>Меню</span></div>
  <a class="l" href="#home">Главная</a>
  <a class="l" href="#about">О нас</a>
+ <a class="l" href="#how">Как это работает</a>
+ <a class="l" href="#where">Где закупаем</a>
+ <a class="l" href="#goods">Что возим</a>
+ <a class="l" href="#delivery">Доставка и оплата</a>
  <a class="l" href="#rate">Курс юаня <small>из банка</small></a>
+ <a class="l" href="#trust">Гарантии</a>
  <a class="l" href="#reviews">Отзывы</a>
+ <a class="l" href="#faq">Вопросы</a>
  <a class="btn" href="#order">Сделать заказ</a>
 </nav>
 
@@ -167,14 +210,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <div>
    <h1>Вещи из Китая — сразу в Беларусь</h1>
    <p>Выкупаем товары с Taobao, Pinduoduo, 1688 и Poizon, проверяем и привозим к вам. Вы платите в белорусских рублях и знаете цену до заказа.</p>
-   <div class="acts"><a class="btn" href="#order">Сделать заказ</a><a class="btn ghost" href="#rate">Как считаем курс</a></div>
+   <div class="acts"><a class="btn" href="#order">Сделать заказ</a><a class="btn ghost" href="#how">Как это работает</a><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Здравствуйте! Хочу узнать про выкуп из Китая." target="_blank" rel="noopener">Написать в Telegram</a></div>
   </div>
   <div class="route" aria-hidden="true">
-   <svg viewBox="0 0 300 150"><rect width="300" height="150" rx="16" fill="none"/>
-    <path class="dash" d="M42 100 C100 20 200 20 258 100" fill="none" stroke="#FF334B" stroke-width="3" stroke-linecap="round"/>
+   <svg viewBox="0 0 300 150"><path d="M42 100 C100 20 200 20 258 100" fill="none" stroke="#FF334B" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 8"/>
     <circle cx="42" cy="100" r="11" fill="#FF334B"/><circle cx="258" cy="100" r="11" fill="#10B981"/>
-    <g transform="translate(150 38)"><rect x="-17" y="-15" width="34" height="30" rx="7" fill="#F5A524"/><path d="M-17 -3h34M0 -15v30" stroke="#fff" stroke-width="2.5"/></g>
-   </svg>
+    <g transform="translate(150 38)"><rect x="-17" y="-15" width="34" height="30" rx="7" fill="#F5A524"/><path d="M-17 -3h34M0 -15v30" stroke="#fff" stroke-width="2.5"/></g></svg>
    <div class="cap"><span>Китай</span><span>Беларусь</span></div>
   </div>
  </div>
@@ -183,16 +224,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 <section id="about"><div class="wrap about-g">
  <div class="person">
-  <div style="display:flex;gap:12px"><div class="av">ДЧ</div><div class="av">АС</div></div>
-  <h3>Давид Чернолецкий</h3>
-  <p style="margin-bottom:12px"><a href="https://t.me/davidnottrapshit" target="_blank" rel="noopener">@davidnottrapshit</a></p>
-  <h3>Арсений Синкевич</h3>
-  <p style="margin-bottom:12px"><a href="https://t.me/senqwz" target="_blank" rel="noopener">@senqwz</a></p>
+  <div style="display:flex;gap:12px"><div class="av">Д</div><div class="av">А</div></div>
+  <h3>Давид</h3>
+  <p><a href="https://t.me/davidnottrapshit" target="_blank" rel="noopener">@davidnottrapshit</a></p>
+  <h3>Арсений</h3>
+  <p><a href="https://t.me/senqwz" target="_blank" rel="noopener">@senqwz</a></p>
   <p style="margin-top:8px">Основатели. Лично ведём каждого клиента.</p>
  </div>
  <div>
   <h2>О нас</h2>
-  <p>Нас зовут <b>Давид Чернолецкий</b> и <b>Арсений Синкевич</b>. Мы занимаемся поставкой вещей из Китая в Беларусь уже <b>5 лет</b>. Начинали с заказов для друзей, сегодня возим одежду, обувь, технику и товары для дома.</p>
+  <p>Нас зовут <b>Давид</b> и <b>Арсений</b>. Мы занимаемся поставкой вещей из Китая в Беларусь уже <b>5 лет</b>. Начинали с заказов для друзей, сегодня возим одежду, обувь, технику и товары для дома.</p>
   <p>Мы берём на себя поиск продавца, выкуп, проверку, доставку и документы. Вам остаётся выбрать товар и дождаться посылку.</p>
   <div class="feats">
    <div>Честная цена<small>Без скрытых платежей</small></div>
@@ -203,14 +244,52 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
  </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
- <h2>Как мы работаем</h2><p class="lead">Четыре шага от ссылки на товар до посылки в руках.</p>
+<section id="how" style="padding-top:0"><div class="wrap">
+ <h2>Как это работает</h2><p class="lead">Четыре шага от ссылки на товар до посылки в руках.</p>
  <ol class="steps">
   <li><div><b>Вы присылаете ссылку</b><span>На товар с любой китайской площадки.</span></div></li>
   <li><div><b>Считаем стоимость</b><span>Называем итоговую цену в BYN по курсу дня.</span></div></li>
   <li><div><b>Выкупаем и проверяем</b><span>Оплачиваем заказ, получаем на складе и отправляем вам фото.</span></div></li>
   <li><div><b>Доставляем в Беларусь</b><span>Отправка по вашему городу, трек-номер у вас в мессенджере.</span></div></li>
  </ol>
+</div></section>
+
+
+<section id="where" style="padding-top:0"><div class="wrap">
+ <h2>Где закупаем</h2><p class="lead">Работаем с основными китайскими площадками. Не знаете, где искать вашу вещь, — пришлите фото, подскажем.</p>
+ <div class="g3">
+  <div class="tile"><div class="ic">🛒</div><h3>Taobao / Tmall</h3><p>Крупнейший маркетплейс Китая: одежда, обувь, техника, товары для дома. На Tmall — официальные магазины брендов.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать с Taobao / Tmall" target="_blank" rel="noopener">Заказать с Taobao</a></div>
+  <div class="tile"><div class="ic">💸</div><h3>Pinduoduo</h3><p>Самые низкие цены на товары повседневного спроса. Подходит, когда важна экономия.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать с Pinduoduo" target="_blank" rel="noopener">Заказать с Pinduoduo</a></div>
+  <div class="tile"><div class="ic">🏭</div><h3>1688</h3><p>Оптовая площадка Alibaba. Цены ниже, но у продавцов часто есть минимальная партия — подскажем, что реально взять.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать с 1688" target="_blank" rel="noopener">Заказать с 1688</a></div>
+  <div class="tile"><div class="ic">👟</div><h3>Poizon (Dewu)</h3><p>Кроссовки и брендовые вещи. Площадка сама проверяет подлинность перед отправкой покупателю.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать с Poizon" target="_blank" rel="noopener">Заказать с Poizon</a></div>
+  <div class="tile"><div class="ic">🐟</div><h3>Goofish (Xianyu)</h3><p>Площадка частных продавцов и вещей б/у. Цены ниже, риск выше, поэтому заранее проверяем продавца и состояние.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать с Goofish" target="_blank" rel="noopener">Заказать с Goofish</a></div>
+  <div class="tile"><div class="ic">🔎</div><h3>Не знаете, где искать?</h3><p>Пришлите фото или скриншот вещи — найдём похожие варианты и назовём цену в BYN.</p><a class="btn tg" href="https://t.me/senqwz" data-msg="Подскажите, где найти такую вещь. Отправлю фото." target="_blank" rel="noopener">Отправить фото</a></div>
+ </div>
+</div></section>
+
+<section id="goods" style="padding-top:0"><div class="wrap">
+ <h2>Что возим</h2><p class="lead">Самое частое в заказах. Если вашей вещи нет в списке, всё равно спросите.</p>
+ <div class="g4">
+  <div class="tile"><div class="ic">👟</div><h3>Кроссовки и обувь</h3><p>Спорт, повседневная, брендовая. Размер подбираем по длине стопы.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать обувь" target="_blank" rel="noopener">Узнать цену</a></div>
+  <div class="tile"><div class="ic">🧥</div><h3>Куртки, худи, кофты</h3><p>Верхняя одежда и трикотаж. Сверяем размер по таблицам РФ.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать куртку / худи / кофту" target="_blank" rel="noopener">Узнать цену</a></div>
+  <div class="tile"><div class="ic">👖</div><h3>Джинсы и брюки</h3><p>Подбираем по обхвату талии и бёдер, чтобы сели как надо.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать джинсы / брюки" target="_blank" rel="noopener">Узнать цену</a></div>
+  <div class="tile"><div class="ic">👜</div><h3>Сумки и аксессуары</h3><p>Сумки, рюкзаки, кепки, ремни, украшения.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать аксессуары" target="_blank" rel="noopener">Узнать цену</a></div>
+  <div class="tile"><div class="ic">📱</div><h3>Техника и гаджеты</h3><p>Наушники, чехлы, умные часы, мелкая электроника.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать технику" target="_blank" rel="noopener">Узнать цену</a></div>
+  <div class="tile"><div class="ic">🏠</div><h3>Товары для дома</h3><p>Посуда, текстиль, органайзеры, декор.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Хочу заказать товары для дома" target="_blank" rel="noopener">Узнать цену</a></div>
+  <div class="tile"><div class="ic">📦</div><h3>Партии для магазинов</h3><p>Закупки с 1688 под ваш бизнес. Обсуждаем объём и условия лично.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Интересует закупка партии" target="_blank" rel="noopener">Обсудить</a></div>
+  <div class="tile"><span class="tag warn">Важно</span><h3>Есть ограничения</h3><p>Некоторые товары нельзя ввозить или пересылать. Напишите нам до заказа — скажем сразу, получится или нет.</p><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Подскажите, можно ли ввезти товар" target="_blank" rel="noopener">Уточнить</a></div>
+ </div>
+</div></section>
+
+<section id="delivery" style="padding-top:0"><div class="wrap">
+ <h2>Доставка и оплата</h2><p class="lead">Всё понятно заранее: сколько платите и за что.</p>
+ <div class="g4">
+  <div class="tile"><div class="ic">💳</div><h3>Оплата в BYN</h3><p>Платите в белорусских рублях переводом на карту. Цена фиксируется в момент оплаты.</p></div>
+  <div class="tile"><div class="ic">🏬</div><h3>Склад и проверка</h3><p>Получаем заказ на складе, осматриваем и присылаем вам фото до отправки.</p></div>
+  <div class="tile"><div class="ic">🚚</div><h3>Доставка по Беларуси</h3><p>Отправляем в ваш город, трек-номер присылаем в мессенджер.</p></div>
+  <div class="tile"><div class="ic">⏱</div><h3>Сроки</h3><p>Зависят от площадки и способа доставки. Точные называем при расчёте, а не «примерно».</p></div>
+ </div>
+ <div class="cta-row"><a class="btn" href="#rate">Посчитать стоимость</a><a class="btn ghost tg" href="https://t.me/senqwz" data-msg="Здравствуйте! Хочу уточнить сроки и доставку." target="_blank" rel="noopener">Спросить про сроки</a></div>
 </div></section>
 
 <section id="rate" style="padding-top:0"><div class="wrap"><div class="rate">
@@ -225,7 +304,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <li><i class="down">↓</i><span>Юань падает — стоимость в BYN снижается, мы пересчитываем цену.</span></li>
     <li><i>✓</i><span>Цена фиксируется в момент оплаты и больше не меняется.</span></li>
    </ul>
-   <p class="note" style="margin-top:24px;">Актуальный курс зафиксирован на отметке 0.47 BYN за 1 юань.</p>
+   <p class="note" style="margin-top:24px">Актуальный курс зафиксирован на отметке 0.47 BYN за 1 юань.</p>
   </div>
   <div class="card calc">
    <h3>Калькулятор заказа</h3>
@@ -241,6 +320,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
  </div>
 </div></div></section>
 
+
+<section id="trust" style="padding-top:0"><div class="wrap">
+ <h2>Почему нам можно доверять</h2><p class="lead">Не громкие слова, а то, что вы можете проверить на каждом заказе.</p>
+ <div class="g4">
+  <div class="tile"><div class="ic">🧾</div><h3>Цена известна заранее</h3><p>Итог в BYN называем до оплаты и не меняем после неё.</p></div>
+  <div class="tile"><div class="ic">📸</div><h3>Фото перед отправкой</h3><p>Видите свой товар на складе и можете задать вопросы до того, как он поедет к вам.</p></div>
+  <div class="tile"><div class="ic">🤝</div><h3>Говорите с основателями</h3><p>Давид и Арсений лично ведут клиентов. Наши Telegram открыты на сайте.</p></div>
+  <div class="tile"><div class="ic">🛟</div><h3>Помогаем в спорных случаях</h3><p>Если что-то пошло не так, общаемся с продавцом и ищем решение вместе с вами.</p></div>
+ </div>
+ <div class="cta-row"><a class="btn" href="#reviews">Читать отзывы</a><a class="btn ghost" href="#faq">Частые вопросы</a></div>
+</div></section>
+
 <section id="reviews" style="padding-top:0"><div class="wrap">
  <h2>Отзывы клиентов</h2><p class="lead">Что говорят те, кто уже заказывал.</p>
  <div class="rev" id="rev">
@@ -248,52 +339,130 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <article class="r"><div class="stars">★★★★★</div><q>Давид помог найти нужный пуховик и выкупил по хорошей цене. Прислали фото на складе, это успокаивает.</q><div class="who"><i>МС</i><div><b>Марина С.</b>Гродно</div></div></article>
   <article class="r"><div class="stars">★★★★★</div><q>Беру у них товары для магазина уже второй год. Курс прозрачный, всё считают понятно.</q><div class="who"><i>ИП</i><div><b>Игорь П.</b>Брест</div></div></article>
  </div>
- <form class="add" id="rf">
+ <form class="add" id="rf" autocomplete="off">
   <h3>Оставить отзыв</h3>
-  <input class="f" id="rn" placeholder="Ваше имя" required maxlength="40">
-  <textarea class="f" id="rt" placeholder="Ваш отзыв" required maxlength="400"></textarea>
-  <div><button class="btn" type="submit">Отправить отзыв</button></div>
-  <div class="ok" id="rok">Спасибо! Отзыв добавлен.</div>
+  <div class="two">
+   <input class="f" id="rn" placeholder="Ваше имя" required maxlength="40">
+   <select class="f" id="rs" aria-label="Оценка"><option value="5">★★★★★ — отлично</option><option value="4">★★★★ — хорошо</option><option value="3">★★★ — нормально</option><option value="2">★★ — плохо</option><option value="1">★ — ужасно</option></select>
+  </div>
+  <textarea class="f" id="rt" placeholder="Ваш отзыв" required minlength="10" maxlength="400"></textarea>
+  <input class="hp" id="rh" tabindex="-1" aria-hidden="true" placeholder="Не заполнять">
+  <div><button class="btn" id="rb" type="submit">Отправить отзыв</button></div>
+  <div class="msg" id="rm" role="status"></div>
  </form>
+</div></section>
+
+
+<section id="faq" style="padding-top:0"><div class="wrap">
+ <h2>Частые вопросы</h2><p class="lead">Если не нашли ответ, спросите в Telegram.</p>
+ <details class="q"><summary>Как считается итоговая цена?</summary><div>Цена товара в юанях × курс юаня в BYN + наша комиссия. Для прикидки есть калькулятор в разделе «Курс». Точную сумму называем перед оплатой.</div></details>
+ <details class="q"><summary>Можно ли заказать, если у меня только фото вещи?</summary><div>Да. Пришлите фото или скриншот, мы найдём подходящие лоты на китайских площадках и покажем варианты с ценами.</div></details>
+ <details class="q"><summary>Как подобрать размер?</summary><div>Просим указать размер РФ или мерки: длину стопы для обуви, обхват груди, талии и бёдер для одежды. Сверяем их с таблицей продавца до выкупа.</div></details>
+ <details class="q"><summary>Что, если товар окажется не тем?</summary><div>Вы увидите фото на нашем складе до отправки. Если есть расхождения, мы связываемся с продавцом и помогаем решить вопрос. Условия возврата зависят от площадки и продавца, поэтому обсуждаем их до заказа.</div></details>
+ <details class="q"><summary>Как оплатить заказ?</summary><div>Переводом на карту в белорусских рублях. Реквизиты присылаем в личном сообщении после согласования цены.</div></details>
+ <details class="q"><summary>Какие товары нельзя заказать?</summary><div>На ввоз и пересылку некоторых товаров есть ограничения. Если сомневаетесь, напишите нам до заказа, и мы скажем, возможно ли это.</div></details>
+ <div class="cta-row"><a class="btn tg" href="https://t.me/senqwz" data-msg="Здравствуйте! У меня вопрос." target="_blank" rel="noopener">Задать свой вопрос</a></div>
 </div></section>
 
 <section id="order" style="padding-top:0"><div class="wrap"><div class="order">
  <h2>Готовы заказать?</h2>
  <p>Пришлите ссылку на товар любому из нас в Telegram, и мы назовём точную цену в белорусских рублях.</p>
+ <div class="quick">
+  <input class="f" id="ql" placeholder="Ссылка на товар или описание" maxlength="300" aria-label="Ссылка на товар">
+  <select class="f" id="qw" aria-label="Кому написать"><option value="davidnottrapshit">Написать Давиду</option><option value="senqwz">Написать Арсению</option></select>
+  <button class="btn" id="qb" type="button">Отправить в Telegram</button>
+ </div>
+ <p class="note" style="opacity:.85;margin:-8px 0 20px">Откроется Telegram с готовым сообщением. Его останется только отправить.</p>
  <div class="order-btns">
-  <a class="btn" href="https://t.me/davidnottrapshit" target="_blank" rel="noopener">Написать Давиду (@davidnottrapshit)</a>
-  <a class="btn" href="https://t.me/senqwz" target="_blank" rel="noopener">Написать Арсению (@senqwz)</a>
+  <a class="btn" href="https://t.me/davidnottrapshit" target="_blank" rel="noopener">Написать Давиду</a>
+  <a class="btn" href="https://t.me/senqwz" target="_blank" rel="noopener">Написать Арсению</a>
  </div>
 </div></div></section>
 </main>
 
-<footer><div class="wrap"><span>© 2026 Юань Экспресс. Выкуп вещей из Китая.</span><span>Разработчик: аноним</span></div></footer>
+<footer><div class="wrap"><span>© 2026 Юань Экспресс. Выкуп вещей из Китая.</span><button class="foot-btn" id="sh" type="button">Поделиться сайтом</button></div></footer>
 
+<div class="fab"><button class="up-btn" id="up" type="button" aria-label="Наверх">↑</button><a class="btn tg" href="https://t.me/senqwz" data-msg="Здравствуйте! Хочу сделать заказ." target="_blank" rel="noopener">✈ Написать нам</a></div>
 <script>
 (function(){
+ /* ── Хранилище отзывов. Заполните два значения (см. инструкцию Supabase) — тогда отзывы общие для всех.
+       Пока пусто: отзывы сохраняются только в браузере самого посетителя. ── */
+ var SB_URL="";   // например https://abcdxyz.supabase.co
+ var SB_KEY="";   // публичный anon key (не service_role!)
+ var LS="yuan_reviews_v1", shared=!!(SB_URL&&SB_KEY);
+
  var b=document.getElementById('bb'),m=document.getElementById('menu'),v=document.getElementById('veil');
  function set(o){m.classList.toggle('on',o);v.classList.toggle('on',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Закрыть меню':'Открыть меню');document.body.style.overflow=o?'hidden':''}
  b.onclick=function(){set(b.getAttribute('aria-expanded')!=='true')};
  v.onclick=function(){set(false)};
  m.querySelectorAll('a').forEach(function(a){a.onclick=function(){set(false)}});
  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+
  var y=document.getElementById('cy'),r=document.getElementById('cr'),f=document.getElementById('cf'),o=document.getElementById('out');
  function calc(){var s=(parseFloat(y.value)||0)*(parseFloat(r.value)||0)*(1+(parseFloat(f.value)||0)/100);o.textContent=s.toFixed(2).replace('.',',')+' BYN'}
  [y,r,f].forEach(function(e){e.oninput=calc});calc();
- document.getElementById('rf').onsubmit=function(e){
-  e.preventDefault();
-  var n=document.getElementById('rn').value.trim(),t=document.getElementById('rt').value.trim();
-  if(!n||!t)return;
+
+ var box=document.getElementById('rev'),form=document.getElementById('rf'),msg=document.getElementById('rm'),btn=document.getElementById('rb');
+ function say(t,c){msg.textContent=t;msg.className='msg '+c;msg.style.display='block'}
+ function card(x){
   var a=document.createElement('article');a.className='r';
-  var s=document.createElement('div');s.className='stars';s.textContent='★★★★★';
-  var q=document.createElement('q');q.textContent=t;
+  var s=document.createElement('div');s.className='stars';var n=Math.min(5,Math.max(1,parseInt(x.rating)||5));s.textContent='★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);
+  var q=document.createElement('q');q.textContent=x.text;
   var w=document.createElement('div');w.className='who';
-  var i=document.createElement('i');i.textContent=n.slice(0,2).toUpperCase();
-  var d=document.createElement('div'),bb=document.createElement('b');bb.textContent=n;d.appendChild(bb);
-  w.appendChild(i);w.appendChild(d);a.appendChild(s);a.appendChild(q);a.appendChild(w);
-  document.getElementById('rev').prepend(a);
-  this.reset();var k=document.getElementById('rok');k.style.display='block';setTimeout(function(){k.style.display='none'},3000);
+  var i=document.createElement('i');i.textContent=String(x.name).slice(0,2).toUpperCase();
+  var d=document.createElement('div'),bb=document.createElement('b');bb.textContent=x.name;d.appendChild(bb);
+  w.appendChild(i);w.appendChild(d);a.appendChild(s);a.appendChild(q);a.appendChild(w);return a;
+ }
+ function show(list){list.slice().reverse().forEach(function(x){box.prepend(card(x))})}
+ function lsGet(){try{return JSON.parse(localStorage.getItem(LS)||'[]')}catch(e){return[]}}
+ function lsPut(x){try{var l=lsGet();l.push(x);localStorage.setItem(LS,JSON.stringify(l.slice(-50)))}catch(e){}}
+ function hdr(extra){var h={apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'};for(var k in extra)h[k]=extra[k];return h}
+
+ function load(){
+  if(!shared){show(lsGet().reverse());return}
+  fetch(SB_URL+'/rest/v1/reviews?select=name,text,rating&approved=eq.true&order=created_at.desc&limit=60',{headers:hdr()})
+   .then(function(res){if(!res.ok)throw 0;return res.json()}).then(show).catch(function(){});
+ }
+ load();
+
+ form.onsubmit=function(e){
+  e.preventDefault();
+  if(document.getElementById('rh').value)return;                 // бот
+  var last=+localStorage.getItem(LS+'_t')||0;
+  if(Date.now()-last<30000){say('Подождите полминуты перед следующим отзывом.','err');return}
+  var x={name:document.getElementById('rn').value.trim().slice(0,40),text:document.getElementById('rt').value.trim().slice(0,400),rating:+document.getElementById('rs').value};
+  if(!x.name||x.text.length<10){say('Напишите имя и отзыв (минимум 10 символов).','err');return}
+  btn.disabled=true;
+  function done(t){try{localStorage.setItem(LS+'_t',Date.now())}catch(e){}form.reset();say(t,'ok');btn.disabled=false;setTimeout(function(){msg.style.display='none'},6000)}
+  if(shared){
+   fetch(SB_URL+'/rest/v1/reviews',{method:'POST',headers:hdr({Prefer:'return=minimal'}),body:JSON.stringify(x)})
+    .then(function(res){if(!res.ok)throw 0;done('Спасибо! Отзыв появится на сайте после проверки.')})
+    .catch(function(){say('Не удалось отправить. Попробуйте позже или напишите нам в Telegram.','err');btn.disabled=false});
+  }else{
+   lsPut(x);box.prepend(card(x));done('Спасибо! Отзыв сохранён в вашем браузере.');
+  }
  };
+ document.querySelectorAll('a.tg').forEach(function(a){a.href='https://t.me/senqwz?text='+encodeURIComponent(a.dataset.msg||'')});
+ document.getElementById('qb').onclick=function(){
+  var t=document.getElementById('ql').value.trim(),w=document.getElementById('qw').value;
+  window.open('https://t.me/'+w+'?text='+encodeURIComponent('Здравствуйте! Хочу заказать: '+(t||'(опишу в чате)')),'_blank','noopener');
+ };
+ var up=document.getElementById('up');
+ up.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
+ addEventListener('scroll',function(){up.classList.toggle('on',scrollY>700)},{passive:true});
+ document.getElementById('sh').onclick=function(){
+  var d={title:document.title,url:location.href.split('#')[0]};
+  if(navigator.share){navigator.share(d).catch(function(){})}
+  else if(navigator.clipboard){navigator.clipboard.writeText(d.url).then(function(){var b=document.getElementById('sh');b.textContent='Ссылка скопирована ✓';setTimeout(function(){b.textContent='Поделиться сайтом'},2500)})}
+ };
+ var tabs=document.getElementById('tabs'),links=[].slice.call(tabs.querySelectorAll('a'));
+ if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+   if(!en.isIntersecting)return;
+   links.forEach(function(a){var on=a.getAttribute('href')==='#'+en.target.id;a.setAttribute('aria-current',on);if(on){var c=tabs.firstElementChild;c.scrollTo({left:a.offsetLeft-20,behavior:'smooth'})}});
+  })},{rootMargin:'-35% 0px -60% 0px'});
+  links.forEach(function(a){var t=document.querySelector(a.getAttribute('href'));if(t)io.observe(t)});
+ }
 })();
 </script>
 </body>
